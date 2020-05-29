@@ -67,10 +67,10 @@ int select_square(int square, int player) {
       case 1:
       case 2:
       case 3:
-         if ((board[0][square-1] == ' ') && (player == 1 || player == 0) {
+         if ((board[0][square-1] == ' ') && (player == 1 || player == 0)) {
             board[0][square-1] = 'X';
             return 0;
-         } else if ((board[0][square-1] ' ') && (player == 2) {
+         } else if ((board[0][square-1] == ' ') && (player == 2)) {
             board[0][square-1] = 'O';
             return 0;
          } else {
@@ -80,10 +80,10 @@ int select_square(int square, int player) {
       case 4:
       case 5:
       case 6:
-         if ((board[1][square-1] == ' ') && (player == 1 || player == 0) {
+         if ((board[1][square-1] == ' ') && (player == 1 || player == 0)) {
             board[1][square-4] = 'X';
             return 0;
-         } else if ((board[1][square-4] ' ') && (player == 2) {
+         } else if ((board[1][square-4] == ' ') && (player == 2)) {
             board[1][square-4] = 'O';
             return 0;
          } else {
@@ -93,10 +93,10 @@ int select_square(int square, int player) {
       case 7:
       case 8:
       case 9:
-         if ((board[2][square-1] == ' ') && (player == 1 || player == 0) {
+         if ((board[2][square-1] == ' ') && (player == 1 || player == 0)) {
             board[2][square-7] = 'X';
             return 0;
-         } else if ((board[1][square-4] ' ') && (player == 2) {
+         } else if ((board[1][square-4] == ' ') && (player == 2)) {
             board[2][square-7] = 'O';
             return 0;
          } else {
@@ -107,7 +107,7 @@ int select_square(int square, int player) {
 
 /* Function to verify if theres is a winner */
 void check_for_winner() {
-   int i, j=0;
+   int i, j = 0;
    int cat = 0;
 
    for (i=0; i<3; i++) {
