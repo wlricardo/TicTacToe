@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /** Function prototypes **/
 void display_menu();
@@ -11,10 +12,13 @@ void check_for_winner();
 char board[3][3];
 char winner = ' ';
 int current_player = 0;
-int select_game = 0;
+int select_game;
+int square_number = 0;
 
 int main()
 {
+   srand(time(NULL));
+
    int i, j;
    int op;
 
@@ -25,11 +29,83 @@ int main()
    }
 
    display_menu();
-   scanf("%d", &op);
+   scanf("%d", &select_game);
 
    display_board();
 
+   while (winner == ' ') {
+      switch (select_game)
+      {
+         case 1:
+            if (current_player == 0 || current_player == 1) {
+               printf("\n Player 1\n");
+               printf("\n Enter a square number [1-9]: ");
+               scanf("%d", &square_number);
 
+               if (select_square(square_number, current_player)) {
+                  current_player = 1;
+               } else {
+                  current_player = 2;
+               }
+            } else {
+               printf("\n Player 2\n");
+               printf("\n Enter a square number [1-9]: ");
+               scanf("%d", &square_number);
+               if (select_square(square_number, current_player)) {
+                  current_player = 2;
+               } else {
+                  current_player = 1;
+               }
+            }
+            break;
+         case 2:
+            if (current_player == 0 || current_player == 1) {
+               printf("\n Player\n");
+               printf("\n Enter a square number [1-9]: ");
+               scanf("%d", &square_number);
+
+               if (select_square(square_number, current_player)) {
+                  current_player = 1;
+               } else {
+                  current_player = 2;
+               }
+            } else {
+               printf("\n Computer\n");
+               printf("\n Selecting a square...\n");
+               square_number = 1+(rand() % 9);
+               if (select_square(square_number, current_player)) {
+                  current_player = 2;
+               } else {
+                  current_player = 1;
+               }
+            }
+            break;
+         case 3:
+            if (current_player == 0 || current_player == 1) {
+               printf("\n Computer 1\n");
+               printf("\n Selecting a square...\n");
+               square_number = 1+(rand() % 9);
+
+               if (select_square(square_number, current_player)) {
+                  current_player = 1;
+               } else {
+                  current_player = 2;
+               }
+            } else {
+               printf("\n Computer 2\n");
+               printf("\n Selecting a square...\n");
+               square_number = 1+(rand() % 9);
+               if (select_square(square_number, current_player)) {
+                  current_player = 2;
+               } else {
+                  current_player = 1;
+               }
+            }
+
+      }
+      display_board();
+      check_for_winner();
+   }
 
    return 0;
 }
@@ -41,7 +117,7 @@ void display_menu() {
    printf("\n SELECT A GAME: \n");
    printf("\n [1] Player 1 vs Player 2");
    printf("\n [2] Player 1 vs Computer");
-   printf("\n [3] Computer vs Computer");
+   printf("\n [3] Computer vs Computer\n");
    printf("\n****************************\n\n >> ");
 }
 
@@ -80,7 +156,7 @@ int select_square(int square, int player) {
       case 4:
       case 5:
       case 6:
-         if ((board[1][square-1] == ' ') && (player == 1 || player == 0)) {
+         if ((board[1][square-4] == ' ') && (player == 1 || player == 0)) {
             board[1][square-4] = 'X';
             return 0;
          } else if ((board[1][square-4] == ' ') && (player == 2)) {
@@ -93,10 +169,10 @@ int select_square(int square, int player) {
       case 7:
       case 8:
       case 9:
-         if ((board[2][square-1] == ' ') && (player == 1 || player == 0)) {
+         if ((board[2][square-7] == ' ') && (player == 1 || player == 0)) {
             board[2][square-7] = 'X';
             return 0;
-         } else if ((board[1][square-4] == ' ') && (player == 2)) {
+         } else if ((board[2][square-7] == ' ') && (player == 2)) {
             board[2][square-7] = 'O';
             return 0;
          } else {
@@ -105,9 +181,9 @@ int select_square(int square, int player) {
    }
 }
 
-/* Function to verify if theres is a winner */
+/* Function to verify if there is a winner */
 void check_for_winner() {
-   int i, j = 0;
+   int i, j;
    int cat = 0;
 
    for (i=0; i<3; i++) {
@@ -115,19 +191,22 @@ void check_for_winner() {
          winner = 'X';
       } else if (board[0][i] == 'X' && board[1][i] == 'X' && board[2][i] == 'X'){
          winner = 'X';
-      } else if (board[j][j] == 'X' && board[j+1][j+1] == 'X' && board[j+2][j+2] == 'X') {
-         winner = 'X';
-      } else if (board[0][2] == 'X' && board[1][1] == 'X' && board[2][0] == 'X') {
-         winner = 'X';
-      } else if (board[i][0] == 'O' && board[i][1] == 'O' && board[i][2] == 'O') {
+      }  else if (board[i][0] == 'O' && board[i][1] == 'O' && board[i][2] == 'O') {
          winner = 'O';
       } else if (board[0][i] == 'O' && board[1][i] == 'O' && board[2][i] == 'O'){
          winner = 'O';
-      } else if (board[j][j] == 'O' && board[j+1][j+1] == 'O' && board[j+2][j+2] == 'O') {
+      }
+   }
+
+   if (board[0][0] == 'X' && board[1][1] == 'X' && board[2][2] == 'X') {
+      winner = 'X';
+   } else if (board[0][2] == 'X' && board[1][1] == 'X' && board[2][0] == 'X') {
+      winner = 'X';
+   }
+   else if (board[0][0] == 'O' && board[1][1] == 'O' && board[2][2] == 'O') {
          winner = 'O';
       } else if (board[0][2] == 'O' && board[1][1] == 'O' && board[2][0] == 'O') {
          winner = 'O';
-      }
    }
 
    if (winner == 'X') {
