@@ -38,11 +38,11 @@ int main()
 /* Function to select a game */
 void display_menu() {
    printf("\n****************************");
-   printf("\n Select a game: \n");
+   printf("\n SELECT A GAME: \n");
    printf("\n [1] Player 1 vs Player 2");
    printf("\n [2] Player 1 vs Computer");
-   printf("\n [4] Computer vs Computer");
-   printf("\n****************************\n >> ");
+   printf("\n [3] Computer vs Computer");
+   printf("\n****************************\n\n >> ");
 }
 
 /* Function to show the game board */
